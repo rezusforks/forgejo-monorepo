@@ -102,7 +102,7 @@ jobs:
           c = c.replace(
               "- https://codeberg.org/forgejo/forgejo\ntype: application",
               "- https://codeberg.org/forgejo/forgejo\n"
-              "- https://github.com/rezuscloud/forgejo-monorepo\ntype: application",
+              "- https://github.com/rezusforks/forgejo-monorepo\ntype: application",
           )
           chart.write_text(c)
 
