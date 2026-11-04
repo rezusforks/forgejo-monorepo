@@ -28,7 +28,7 @@ preserve:
 # proof the patch is applied and accounted for.
 patches:
   - path: Chart.yaml
-    signature: github.com/rezuscloud/forgejo-monorepo
+    signature: github.com/rezusforks/forgejo-monorepo
     description: >-
       name forgejo-monorepo; home/sources point at the Rezuscloud monorepo;
       version + appVersion carry the LOCAL release line (chart N+2 → app N,

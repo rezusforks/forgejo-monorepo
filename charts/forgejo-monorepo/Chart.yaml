@@ -26,7 +26,7 @@ name: forgejo-monorepo
 sources:
 - https://code.forgejo.org/forgejo-helm/forgejo-helm
 - https://codeberg.org/forgejo/forgejo
-- https://github.com/rezuscloud/forgejo-monorepo
+- https://github.com/rezusforks/forgejo-monorepo
 - https://github.com/rezuscloud/forgejo
 type: application
 version: 18.0.0-rc.1
