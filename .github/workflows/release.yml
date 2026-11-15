@@ -105,8 +105,11 @@ jobs:
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          # Cross-org push (package in rezuscloud, repo in rezusforks):
+          # the workflow GITHUB_TOKEN cannot push across orgs — same fix
+          # as dev-build.yml (GHCR_PUSH_TOKEN, write:packages).
+          username: tibrezus
+          password: ${{ secrets.GHCR_PUSH_TOKEN }}
       - name: Build & push server image (rootful)
         uses: docker/build-push-action@v6
         with:
@@ -307,7 +310,7 @@ jobs:
         # unlinked package 403s — that is how charts silently stopped
         # publishing between 18.0.0-rc.1 and the rename.
         run: |
-          echo '${{ secrets.GITHUB_TOKEN }}' | helm registry login ghcr.io -u '${{ github.actor }}' --password-stdin
+          echo '${{ secrets.GHCR_PUSH_TOKEN }}' | helm registry login ghcr.io -u tibrezus --password-stdin
           helm push dist/${{ needs.prepare.outputs.chart_archive }} '${{ needs.prepare.outputs.chart_repository }}'
       - uses: actions/download-artifact@v4
         with: { pattern: fj-cli-*, merge-multiple: true, path: dist-cli }
