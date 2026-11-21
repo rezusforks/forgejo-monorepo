@@ -41,7 +41,7 @@ concurrency:
 jobs:
   bump:
     name: vendor ${{ inputs.component }} @ ${{ inputs.version }}
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 20
     env:
       COMPONENT: ${{ inputs.component }}
