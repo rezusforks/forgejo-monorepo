@@ -184,7 +184,7 @@ jobs:
   govulncheck:
     name: runner/ govulncheck (advisory)
     runs-on: [self-hosted, linux, x64]
-    timeout-minutes: 15
+    timeout-minutes: 40
     if: >-
       (github.event_name != 'schedule' || github.event.schedule == '47 5 * * 1') &&
       (github.event_name != 'workflow_dispatch' || inputs.only == 'all' || inputs.only == 'govulncheck')
