@@ -20,7 +20,7 @@ on:
 jobs:
   integration:
     runs-on: [self-hosted, linux, x64]
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         # Full history + tags: the server image build derives its version
