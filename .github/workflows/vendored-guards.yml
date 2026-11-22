@@ -58,7 +58,7 @@ concurrency:
 jobs:
   pristine:
     name: runner/ pristine vs pin
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     if: >-
       (github.event_name != 'schedule' || github.event.schedule == '47 5 * * 1') &&
@@ -93,7 +93,7 @@ jobs:
 
   chart:
     name: charts/forgejo-monorepo patches vs pin
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     if: >-
       (github.event_name != 'schedule' || github.event.schedule == '47 5 * * 1') &&
@@ -183,8 +183,8 @@ jobs:
 
   govulncheck:
     name: runner/ govulncheck (advisory)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    runs-on: [self-hosted, linux, x64]
+    timeout-minutes: 40
     if: >-
       (github.event_name != 'schedule' || github.event.schedule == '47 5 * * 1') &&
       (github.event_name != 'workflow_dispatch' || inputs.only == 'all' || inputs.only == 'govulncheck')
@@ -211,7 +211,7 @@ jobs:
 
   lag:
     name: runner/ sync-lag vs upstream
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     if: >-
       (github.event_name != 'schedule' || github.event.schedule == '23 4 * * *') &&

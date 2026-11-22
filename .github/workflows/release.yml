@@ -35,7 +35,7 @@ on:
 jobs:
   prepare:
     if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     outputs:
       release_version: ${{ steps.meta.outputs.release_version }}
       version_file: ${{ steps.meta.outputs.version_file }}
@@ -93,7 +93,7 @@ jobs:
 
   build-server-images:
     needs: prepare
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     permissions: { contents: read, packages: write }
     steps:
       - uses: actions/checkout@v4
@@ -147,7 +147,7 @@ jobs:
 
   build-cli:
     needs: prepare
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     permissions: { contents: read }
     strategy:
       matrix:
@@ -207,7 +207,7 @@ jobs:
     # fj assets) — the version comes from the release tag; the binary stamps
     # its own lineage <upstream>-rezus.<N>.
     needs: prepare
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     permissions: { contents: read }
     strategy:
       fail-fast: false
@@ -264,7 +264,7 @@ jobs:
 
   build-repo-map:
     needs: prepare
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     permissions: { contents: read }
     steps:
       - uses: actions/checkout@v4
@@ -287,7 +287,7 @@ jobs:
 
   publish-chart-and-release:
     needs: [prepare, build-server-images, build-cli, build-runner, build-repo-map]
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     permissions: { contents: write, packages: write }
     steps:
       - uses: actions/checkout@v4

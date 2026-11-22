@@ -19,8 +19,8 @@ on:
 
 jobs:
   integration:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
+    runs-on: [self-hosted, linux, x64]
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         # Full history + tags: the server image build derives its version
@@ -58,6 +58,9 @@ jobs:
       - name: Start Forgejo container
         run: |
           set -euo pipefail
+          # a cancelled predecessor can leave the container behind (cleanup is
+          # not guaranteed on cancel) — remove it before claiming the name
+          docker rm -f forgejo >/dev/null 2>&1 || true
           docker run -d --name forgejo -p 3000:3000 \
             -e FORGEJO__security__INSTALL_LOCK=true \
             -e FORGEJO__server__LOCAL_ROOT_URL=http://localhost:3000/ \
@@ -100,3 +103,7 @@ jobs:
           # endpoint issues (e.g. token-deletion 401s); they are tracked as a
           # separate cleanup and intentionally excluded from the gate.
           go test -v -count=1 -run TestCLICommands ./tests/integration/...
+
+      - name: Teardown Forgejo container
+        if: always()
+        run: docker rm -f forgejo >/dev/null 2>&1 || true
